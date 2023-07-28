@@ -5,7 +5,10 @@ import com.pandemuerto.CleanHome.model.bean.JwtResponseBean;
 import com.pandemuerto.CleanHome.model.bean.LoginRequestBean;
 import com.pandemuerto.CleanHome.model.bean.MessageResponseBean;
 import com.pandemuerto.CleanHome.model.bean.SignUpRequestBean;
+import com.pandemuerto.CleanHome.model.bean.RegisterRequestBean;
+import com.pandemuerto.CleanHome.model.entity.DatosRegister;
 import com.pandemuerto.CleanHome.model.entity.Usuario;
+import com.pandemuerto.CleanHome.repository.IDatosRegisterRepository;
 import com.pandemuerto.CleanHome.repository.IRolRepository;
 import com.pandemuerto.CleanHome.repository.IUsuarioRepository;
 import com.pandemuerto.CleanHome.service.impl.UserDetailsImpl;
@@ -27,6 +30,9 @@ import java.util.stream.Collectors;
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
+
+    @Autowired
+    IDatosRegisterRepository datosregisterRepository;
 
     @Autowired
     IUsuarioRepository usuarioRepository;
@@ -85,4 +91,30 @@ public class AuthController {
         usuarioRepository.save(usuario);
         return ResponseEntity.ok(new MessageResponseBean("Usuario registrado exitosamente!"));
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequestBean registerRequest) {
+        if (usuarioRepository.existsByUsername(registerRequest.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponseBean("Error: Username ya registrado!"));
+        }
+
+        if (usuarioRepository.existsByEmail(registerRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponseBean("Error: Email ya Registrado!"));
+        }
+
+        DatosRegister datosregister = new DatosRegister();
+        datosregister.setUsername(registerRequest.getUsername());
+        datosregister.setName(registerRequest.getName());
+        datosregister.setLastname(registerRequest.getLastname());
+        datosregister.setPhonenumber(registerRequest.getPhonenumber());
+        datosregister.setBirthdate(registerRequest.getBirthdate());
+        datosregisterRepository.save(datosregister);
+        return ResponseEntity.ok(new MessageResponseBean("Bienvenido, fuiste  registrado exitosamente!"));
+    }
+
+
 }
