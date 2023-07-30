@@ -16,10 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableMethodSecurity
-public class WebSecurityConfig {
+public class WebSecurityConfig implements WebMvcConfigurer {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -53,6 +55,13 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // todos los endpoints en la aplicación
+                .allowedOrigins("http://localhost:3000") // permite este origen en las solicitudes CORS
+                .allowedMethods("*") // permite todos los métodos de solicitud (GET, POST, etc.)
+                .allowCredentials(true); // permite solicitudes con credenciales
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
