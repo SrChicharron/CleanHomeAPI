@@ -16,7 +16,6 @@ public class Usuario implements Serializable {
     @Serial
     private static final long serialVersionUID = 270508607443436466L;
 
-    public static final String TABLE_NAME= "USER";
     @Id
     @Column(name = "USERNAME")
     @NotEmpty

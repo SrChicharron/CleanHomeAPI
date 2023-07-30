@@ -1,0 +1,42 @@
+# REQUEST PARA REGISTRAR UN USUARIO NUEVO
+# EL AUTHORITY DEBE SER ADMIN SIEMPRE
+http://localhost:2813/ch/auth/signup
+{
+    "username":"mnavarro",
+    "email":"201513073@uteq.edu.mx",
+    "password":"mnavarro",
+    "enabled":1,
+    "authorities":[
+        {
+            "authority":"ROLE_ADMIN",
+            "username":"mnavarro"
+        }
+    ]
+}
+
+# REQUEST PARA REGISTRAR USUARIOS O CLIENTES NUEVOS
+# EL AUTHORITY DEBE SER CLIENTE O USUARIO
+http://localhost:2813/ch/auth/register
+{
+    "username":"metzmarquez",
+    "email":"metztli@uteq.edu.mx",
+    "password":"metztli",
+    "enabled":1,
+    "authorities":[
+        {
+            "authority":"ROLE_Cliente",
+            "username":"metzmarquez"
+        }
+    ],
+    "name":"Metztli",
+    "lastName":"Marquez Angeles",
+    "cellphone":"4421000000",
+    "birthday":"2001-04-29 00:00:00"
+}
+
+# REQUEST PARA EL LOGIN
+http://localhost:2813/ch/auth/signin
+{
+    "username":"metzmarquez",
+    "password":"metztli"
+}

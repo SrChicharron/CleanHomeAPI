@@ -14,7 +14,6 @@ public class Rol implements Serializable {
     @Serial
     private static final long serialVersionUID = -3687749937737990902L;
 
-    public static final String TABLE_NAME= "ROL";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
