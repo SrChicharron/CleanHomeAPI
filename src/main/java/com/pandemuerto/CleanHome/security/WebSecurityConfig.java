@@ -58,9 +58,10 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // todos los endpoints en la aplicación
-                .allowedOrigins("http://localhost:3000") // permite este origen en las solicitudes CORS
+                .allowedOrigins("*") // permite este origen en las solicitudes CORS
                 .allowedMethods("*") // permite todos los métodos de solicitud (GET, POST, etc.)
-                .allowCredentials(true); // permite solicitudes con credenciales
+                //.allowCredentials(true)
+                ; // permite solicitudes con credenciales
     }
 
     @Bean
