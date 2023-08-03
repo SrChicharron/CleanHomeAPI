@@ -23,10 +23,6 @@ public class PropiedadController {
         List<Propiedad> list = propiedadService.getPropiedades();
         return ResponseEntity.ok(list);
     }
-    @GetMapping("/getTipos")
-    public ResponseEntity<?> gettipoPropiedad() {
-        List<TipoPropiedad> list = propiedadService.getTipos();
-        return  ResponseEntity.ok(list);
-    }
+
 
 }

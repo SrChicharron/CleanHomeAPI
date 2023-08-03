@@ -16,8 +16,7 @@ public class IPropiedadServiceImpl implements IPropiedadService {
 
     @Autowired
     IPropiedadRepository propiedadRepository;
-    @Autowired
-    ITipoPropiedadRepository tipoPropiedadRepository;
+
     @Override
     public List<Propiedad> getPropiedades() {
 
@@ -26,10 +25,5 @@ public class IPropiedadServiceImpl implements IPropiedadService {
         return propiedades;
     }
 
-    @Override
-    public List<TipoPropiedad> getTipos() {
-        List<TipoPropiedad> tipos = new ArrayList<>();
-        tipoPropiedadRepository.findAll().forEach(tipos::add);
-        return tipos;
-    }
+
 }

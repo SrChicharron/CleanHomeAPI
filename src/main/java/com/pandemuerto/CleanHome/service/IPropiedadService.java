@@ -8,5 +8,5 @@ import java.util.List;
 public interface IPropiedadService {
     List<Propiedad> getPropiedades();
 
-    List<TipoPropiedad> getTipos();
+
 }
