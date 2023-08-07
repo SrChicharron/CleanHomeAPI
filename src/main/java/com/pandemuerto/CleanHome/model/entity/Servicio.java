@@ -1,0 +1,21 @@
+package com.pandemuerto.CleanHome.model.entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name = "servicio")
+public class Servicio {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Column(name = "descripcion")
+    private String descripcion;
+}
