@@ -6,37 +6,37 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 
 @Data
-@Entity(name = "USER")
-@Table(name = "USER")
+@Entity(name = "USUARIO")
+@Table(name = "USUARIO")
 public class Usuario implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 270508607443436466L;
-
+    private static final long serialVersionUID = -6673078097350304094L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    @Basic(optional = false)
+    private int id;
+    @Column(name = "NAME")
+    @NotEmpty
+    @Basic(optional = false)
+    private String name;
+    @Column(name = "LASTNAME")
+    @NotEmpty
+    @Basic(optional = false)
+    private String lastname;
+    @Column(name = "CELLPHONE")
+    @NotEmpty
+    @Basic(optional = false)
+    private String cellphone;
+    @Column(name = "BIRTHDAY")
+    @NotEmpty
+    @Basic(optional = false)
+    private String birthday;
     @Column(name = "USERNAME")
     @NotEmpty
     @Basic(optional = false)
     private String username;
-
-    @Column(name = "PASSWORD")
-    @NotEmpty
-    @Basic(optional = false)
-    private String password;
-
-    @Column(name = "EMAIL")
-    @NotEmpty
-    @Basic(optional = false)
-    private String email;
-
-    @Column(name = "ENABLED")
-    @Basic(optional = false)
-    private Boolean enabled;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "USERNAME")
-    private List<Rol> authorities;
 }
-
