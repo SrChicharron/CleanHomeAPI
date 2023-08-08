@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ch/auth")
+@RequestMapping("/ch/propiedad")
 public class PropiedadController {
 
     @Autowired
@@ -22,4 +22,6 @@ public class PropiedadController {
         List<Propiedad> list = propiedadService.getPropiedades();
         return ResponseEntity.ok(list);
     }
+
+
 }

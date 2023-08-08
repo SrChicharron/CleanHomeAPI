@@ -4,14 +4,8 @@ import com.pandemuerto.CleanHome.model.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
-    Optional<Usuario> findByUsername(String username);
+public interface IUsuarioRepository extends JpaRepository<Usuario,Integer> {
 
-    Boolean existsByUsername(String username);
-
-    Boolean existsByEmail(String email);
-
+    Usuario findByUsername(String username);
 }

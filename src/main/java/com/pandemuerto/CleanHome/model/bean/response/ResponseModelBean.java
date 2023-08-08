@@ -1,4 +1,4 @@
-package com.pandemuerto.CleanHome.model.bean;
+package com.pandemuerto.CleanHome.model.bean.response;
 
 import lombok.Data;
 

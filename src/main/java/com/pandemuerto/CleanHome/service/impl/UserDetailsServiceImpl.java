@@ -1,7 +1,7 @@
 package com.pandemuerto.CleanHome.service.impl;
 
-import com.pandemuerto.CleanHome.model.entity.Usuario;
-import com.pandemuerto.CleanHome.repository.IUsuarioRepository;
+import com.pandemuerto.CleanHome.model.entity.User;
+import com.pandemuerto.CleanHome.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    IUsuarioRepository userRepository;
+    IUserRepository userRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
         return UserDetailsImpl.build(user);

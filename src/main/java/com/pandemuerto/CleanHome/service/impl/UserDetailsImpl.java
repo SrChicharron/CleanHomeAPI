@@ -2,7 +2,7 @@ package com.pandemuerto.CleanHome.service.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pandemuerto.CleanHome.model.entity.Rol;
-import com.pandemuerto.CleanHome.model.entity.Usuario;
+import com.pandemuerto.CleanHome.model.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +32,7 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(Usuario user) {
+    public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Rol rol:user.getAuthorities()){
             authorities.add(new SimpleGrantedAuthority(rol.getAuthority()));

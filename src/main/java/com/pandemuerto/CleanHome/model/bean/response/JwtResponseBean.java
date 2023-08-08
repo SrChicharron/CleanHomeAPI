@@ -1,4 +1,4 @@
-package com.pandemuerto.CleanHome.model.bean;
+package com.pandemuerto.CleanHome.model.bean.response;
 
 import lombok.Data;
 
@@ -10,5 +10,6 @@ public class JwtResponseBean {
     private String type = "Bearer";
     private String username;
     private String email;
-    private List<String> roles;
+    private String rol;
+    private int idUsuario;
 }

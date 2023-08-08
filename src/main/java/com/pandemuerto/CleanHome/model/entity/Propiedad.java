@@ -19,35 +19,41 @@ public class Propiedad implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private int id;
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "FOTO")
     private String foto;
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "TITULO")
     private String titulo;
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "CALLE")
     private String calle;
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "NUMERO_EXTERIOR")
     private String numeroExt;
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "CODIGO_POSTAL")
     private String codigoPostal;
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "COLONIA")
     private String colonia;
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "REFERENCIAS")
     private String referencias;
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "COMPROBANTE")
     private String comprobante;
-    @Basic(optional = true)
+    @Basic(optional = false)
+    @Column(name = "ESTATUS")
+    private String estatus;
+    @Basic(optional = false)
     @Column(name = "ID_ESTADO")
     private int idEstado;
-    @Basic(optional = true)
-    @Column(name = "ID_TIPO")
-    private int idTipo;
+    @Basic(optional = false)
+    @Column(name = "ID_TIPO_PROPIEDAD")
+    private int idTipoPropiedad;
+    @Basic(optional = false)
+    @Column(name = "ID_USUARIO")
+    private int idUsuario;
 
 }
