@@ -8,8 +8,8 @@ import com.pandemuerto.CleanHome.model.bean.response.JwtResponseBean;
 import com.pandemuerto.CleanHome.model.bean.response.MessageResponseBean;
 import com.pandemuerto.CleanHome.model.entity.Usuario;
 import com.pandemuerto.CleanHome.model.entity.User;
-import com.pandemuerto.CleanHome.repository.IClienteRepository;
 import com.pandemuerto.CleanHome.repository.IUsuarioRepository;
+import com.pandemuerto.CleanHome.repository.IUserRepository;
 import com.pandemuerto.CleanHome.service.impl.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +31,10 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    IUsuarioRepository usuarioRepository;
+    IUserRepository userRepository;
 
     @Autowired
-    IClienteRepository clienteRepository;
+    IUsuarioRepository usuarioRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -60,19 +60,23 @@ public class AuthController {
         jwtResponseBean.setToken(jwt);
         jwtResponseBean.setUsername(userDetails.getUsername());
         jwtResponseBean.setEmail(userDetails.getEmail());
-        jwtResponseBean.setRoles(roles);
+        jwtResponseBean.setRol(roles.get(0));
+        if(jwtResponseBean.getRol().equals("ROLE_EMPLEADO")||jwtResponseBean.getRol().equals("ROLE_CLIENTE")){
+        Usuario usuario= usuarioRepository.findByUsername(userDetails.getUsername());
+        jwtResponseBean.setIdUsuario(usuario.getId());
+        }
         return ResponseEntity.ok(jwtResponseBean);
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequestBean signupRequest) {
-        if (usuarioRepository.existsByUsername(signupRequest.getUsername())) {
+        if (userRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponseBean("Error: Username ya registrado!"));
         }
 
-        if (usuarioRepository.existsByEmail(signupRequest.getEmail())) {
+        if (userRepository.existsByEmail(signupRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponseBean("Error: Email ya Registrado!"));
@@ -84,19 +88,19 @@ public class AuthController {
         user.setEmail(signupRequest.getEmail());
         user.setEnabled(signupRequest.getEnabled());
         user.setAuthorities(signupRequest.getAuthorities());
-        usuarioRepository.save(user);
+        userRepository.save(user);
         return ResponseEntity.ok(new MessageResponseBean("Usuario registrado exitosamente!"));
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerClient(@Valid @RequestBody ClientSignUpRequestBean signupRequest) {
-        if (usuarioRepository.existsByUsername(signupRequest.getUsername())) {
+        if (userRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponseBean("Error: Username ya registrado!"));
         }
 
-        if (usuarioRepository.existsByEmail(signupRequest.getEmail())) {
+        if (userRepository.existsByEmail(signupRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponseBean("Error: Email ya Registrado!"));
@@ -108,14 +112,14 @@ public class AuthController {
         user.setEmail(signupRequest.getEmail());
         user.setEnabled(signupRequest.getEnabled());
         user.setAuthorities(signupRequest.getAuthorities());
-        usuarioRepository.save(user);
+        userRepository.save(user);
         Usuario usuario = new Usuario();
         usuario.setName(signupRequest.getName());
         usuario.setLastname(signupRequest.getLastName());
         usuario.setCellphone(signupRequest.getCellphone());
         usuario.setBirthday(signupRequest.getBirthday());
         usuario.setUsername(signupRequest.getUsername());
-        clienteRepository.save(usuario);
+        usuarioRepository.save(usuario);
         return ResponseEntity.ok(new MessageResponseBean("Registro Exitoso!"));
     }
 }
