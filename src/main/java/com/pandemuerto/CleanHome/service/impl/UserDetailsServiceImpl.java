@@ -1,6 +1,6 @@
 package com.pandemuerto.CleanHome.service.impl;
 
-import com.pandemuerto.CleanHome.model.entity.Usuario;
+import com.pandemuerto.CleanHome.model.entity.User;
 import com.pandemuerto.CleanHome.repository.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
         return UserDetailsImpl.build(user);

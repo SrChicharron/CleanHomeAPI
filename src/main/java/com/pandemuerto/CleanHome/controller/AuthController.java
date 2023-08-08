@@ -1,11 +1,14 @@
 package com.pandemuerto.CleanHome.controller;
 
 import com.pandemuerto.CleanHome.jwt.JwtUtils;
-import com.pandemuerto.CleanHome.model.bean.*;
-import com.pandemuerto.CleanHome.model.entity.Cliente;
+import com.pandemuerto.CleanHome.model.bean.request.ClientSignUpRequestBean;
+import com.pandemuerto.CleanHome.model.bean.request.LoginRequestBean;
+import com.pandemuerto.CleanHome.model.bean.request.SignUpRequestBean;
+import com.pandemuerto.CleanHome.model.bean.response.JwtResponseBean;
+import com.pandemuerto.CleanHome.model.bean.response.MessageResponseBean;
 import com.pandemuerto.CleanHome.model.entity.Usuario;
+import com.pandemuerto.CleanHome.model.entity.User;
 import com.pandemuerto.CleanHome.repository.IClienteRepository;
-import com.pandemuerto.CleanHome.repository.IRolRepository;
 import com.pandemuerto.CleanHome.repository.IUsuarioRepository;
 import com.pandemuerto.CleanHome.service.impl.UserDetailsImpl;
 import jakarta.validation.Valid;
@@ -75,13 +78,13 @@ public class AuthController {
                     .body(new MessageResponseBean("Error: Email ya Registrado!"));
         }
 
-        Usuario usuario = new Usuario();
-        usuario.setUsername(signupRequest.getUsername());
-        usuario.setPassword(encoder.encode(signupRequest.getPassword()));
-        usuario.setEmail(signupRequest.getEmail());
-        usuario.setEnabled(signupRequest.getEnabled());
-        usuario.setAuthorities(signupRequest.getAuthorities());
-        usuarioRepository.save(usuario);
+        User user = new User();
+        user.setUsername(signupRequest.getUsername());
+        user.setPassword(encoder.encode(signupRequest.getPassword()));
+        user.setEmail(signupRequest.getEmail());
+        user.setEnabled(signupRequest.getEnabled());
+        user.setAuthorities(signupRequest.getAuthorities());
+        usuarioRepository.save(user);
         return ResponseEntity.ok(new MessageResponseBean("Usuario registrado exitosamente!"));
     }
 
@@ -99,20 +102,20 @@ public class AuthController {
                     .body(new MessageResponseBean("Error: Email ya Registrado!"));
         }
 
+        User user = new User();
+        user.setUsername(signupRequest.getUsername());
+        user.setPassword(encoder.encode(signupRequest.getPassword()));
+        user.setEmail(signupRequest.getEmail());
+        user.setEnabled(signupRequest.getEnabled());
+        user.setAuthorities(signupRequest.getAuthorities());
+        usuarioRepository.save(user);
         Usuario usuario = new Usuario();
+        usuario.setName(signupRequest.getName());
+        usuario.setLastname(signupRequest.getLastName());
+        usuario.setCellphone(signupRequest.getCellphone());
+        usuario.setBirthday(signupRequest.getBirthday());
         usuario.setUsername(signupRequest.getUsername());
-        usuario.setPassword(encoder.encode(signupRequest.getPassword()));
-        usuario.setEmail(signupRequest.getEmail());
-        usuario.setEnabled(signupRequest.getEnabled());
-        usuario.setAuthorities(signupRequest.getAuthorities());
-        usuarioRepository.save(usuario);
-        Cliente cliente = new Cliente();
-        cliente.setName(signupRequest.getName());
-        cliente.setLastname(signupRequest.getLastName());
-        cliente.setCellphone(signupRequest.getCellphone());
-        cliente.setBirthday(signupRequest.getBirthday());
-        cliente.setUsername(signupRequest.getUsername());
-        clienteRepository.save(cliente);
+        clienteRepository.save(usuario);
         return ResponseEntity.ok(new MessageResponseBean("Registro Exitoso!"));
     }
 }

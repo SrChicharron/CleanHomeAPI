@@ -1,7 +1,6 @@
 package com.pandemuerto.CleanHome.controller;
 
 import com.pandemuerto.CleanHome.model.entity.Propiedad;
-import com.pandemuerto.CleanHome.model.entity.TipoPropiedad;
 import com.pandemuerto.CleanHome.service.IPropiedadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ch/auth")
+@RequestMapping("/ch/propiedad")
 public class PropiedadController {
 
     @Autowired
