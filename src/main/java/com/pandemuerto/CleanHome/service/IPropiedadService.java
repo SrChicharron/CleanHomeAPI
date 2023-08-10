@@ -1,6 +1,8 @@
 package com.pandemuerto.CleanHome.service;
 
 import com.pandemuerto.CleanHome.model.bean.response.MessageResponseBean;
+import com.pandemuerto.CleanHome.model.entity.ComprobantePropiedad;
+import com.pandemuerto.CleanHome.model.entity.FotoPropiedad;
 import com.pandemuerto.CleanHome.model.entity.Propiedad;
 
 import java.util.List;
@@ -8,10 +10,16 @@ import java.util.List;
 public interface IPropiedadService {
     List<Propiedad> getPropiedades();
 
-    MessageResponseBean addPropiedad(Propiedad propiedad);
+    Propiedad addPropiedad(Propiedad propiedad);
 
-    MessageResponseBean updatePropiedad(Propiedad propiedad);
+    Propiedad updatePropiedad(Propiedad propiedad);
 
     MessageResponseBean deletePropiedad(int id);
+
+    Propiedad findPropiedadById(int id);
+
+    List<Propiedad> findPropiedadesByIdUsuario(int idUsuario);
+
+    MessageResponseBean addPictures(List<FotoPropiedad> fotos, List<ComprobantePropiedad> comprobantes);
 
 }
