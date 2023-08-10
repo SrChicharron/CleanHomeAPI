@@ -40,3 +40,10 @@ http://localhost:2813/ch/auth/signin
     "username":"metzmarquez",
     "password":"metztli"
 }
+
+# REQUEST PARA AGREGAR SERVICIOS
+http://localhost:2813/ch/servicio/agregarServicio
+{
+    "nombre":"Limpieza total",
+    "descripcion":"Descripcion del servicio de limpieza"
+}
