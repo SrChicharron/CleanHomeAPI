@@ -1,16 +1,14 @@
 package com.pandemuerto.CleanHome.controller;
 
-import com.pandemuerto.CleanHome.model.bean.LoginRequestBean;
-import com.pandemuerto.CleanHome.model.bean.MessageResponseBean;
-import com.pandemuerto.CleanHome.model.bean.ServiceRequestBean;
+import com.pandemuerto.CleanHome.model.bean.request.ServiceRequestBean;
+import com.pandemuerto.CleanHome.model.bean.response.MessageResponseBean;
 import com.pandemuerto.CleanHome.model.entity.Servicio;
 import com.pandemuerto.CleanHome.repository.IServicioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
+
 import java.util.List;
 
 
