@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Entity(name = "PUBLICACION")
@@ -21,13 +22,19 @@ public class Publicacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "DESCRIPCION")
     private String descripcion;
+    @Column(name = "ESTADO_PUBLICACION")
+    private String estadoPublicacion;
+    @Column(name = "FECHA")
+    private Date fecha;
     @Basic(optional = false)
     @Column(name = "PAGO_OFRECIDO")
     private Float pagoOfrecido;
     @Basic(optional = false)
-    @Column(name = "ID_TIPO_SERVICIO")
+    @Column(name = "ID_SERVICIO")
     private int idTipoServicio;
-    @Basic(optional = false)
     @Column(name = "ID_USUARIO")
     private int idUsuario;
+    @Basic(optional = false)
+    @Column(name = "ID_PROPIEDAD")
+    private int idPropiedad;
 }
