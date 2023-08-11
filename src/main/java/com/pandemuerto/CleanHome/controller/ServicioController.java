@@ -25,6 +25,16 @@ public class ServicioController {
         return ResponseEntity.ok(list);
     }
 
+    @GetMapping("/getServicio/{id}")
+    public ResponseEntity<?> getServicio(@PathVariable Long id){
+        Servicio servicio = servicioRepository.findById(id).orElse(null);
+        if (servicio==null){
+            return ResponseEntity.badRequest().body(new MessageResponseBean("El servicio no existe."));
+        } else {
+            return ResponseEntity.ok(servicio);
+        }
+    }
+
     @PostMapping("/agregarServicio")
     public ResponseEntity<?> agregarService(@Valid @RequestBody ServiceRequestBean serviceRequest){
         Servicio servicio = new Servicio();
