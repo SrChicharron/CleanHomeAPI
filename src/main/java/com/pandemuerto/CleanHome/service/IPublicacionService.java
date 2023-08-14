@@ -13,4 +13,6 @@ public interface IPublicacionService {
     MessageResponseBean deletePublicacion(int id);
 
     List<Publicacion> postPostulaciones();
+     List<Publicacion> getPublicacionesPorTipoLimpieza(String tipoLimpieza);
+
 }

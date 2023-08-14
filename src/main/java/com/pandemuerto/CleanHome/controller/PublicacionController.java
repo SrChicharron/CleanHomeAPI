@@ -39,6 +39,11 @@ public class PublicacionController {
         List<Publicacion> list = publicacionService.postPostulaciones();
         return ResponseEntity.ok(list);
     }
+    @GetMapping("/getPublicacionesPorTipoLimpieza")
+    public ResponseEntity<List<Publicacion>> getPublicacionesPorTipoLimpieza(@RequestParam String tipoLimpieza) {
+        List<Publicacion> publicacionesFiltradas = publicacionService.getPublicacionesPorTipoLimpieza(tipoLimpieza);
+        return ResponseEntity.ok(publicacionesFiltradas);
+    }
     @PostMapping("/deletePublicacion")
     public ResponseEntity<?> deletePublicacion(@RequestBody Publicacion publicacion){
         MessageResponseBean response = publicacionService.deletePublicacion(publicacion.getId());

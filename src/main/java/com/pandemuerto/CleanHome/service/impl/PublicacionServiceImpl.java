@@ -58,4 +58,11 @@ public class PublicacionServiceImpl implements IPublicacionService {
     public List<Publicacion> postPostulaciones() {
         return null;
     }
+
+
+
+    @Override
+    public List<Publicacion> getPublicacionesPorTipoLimpieza(String tipoLimpieza) {
+        return publicacionRepository.findByTipoLimpieza(tipoLimpieza);
+    }
 }
