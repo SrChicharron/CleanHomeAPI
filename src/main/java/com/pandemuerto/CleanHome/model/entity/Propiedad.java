@@ -41,35 +41,21 @@ public class Propiedad implements Serializable {
     @Basic(optional = false)
     @Column(name = "REFERENCIAS")
     private String referencias;
-    //@Basic(optional = false)
-    //@Column(name = "COMPROBANTE")
-    //private String comprobante;
     @Basic(optional = false)
     @Column(name = "ESTATUS")
     private String estatus;
-    //@Basic(optional = false)
-    //@Column(name = "ID_ESTADO")
-    //private int idEstado;
-    //@Basic(optional = false)
-    //@Column(name = "ID_TIPO_PROPIEDAD")
-    //private int idTipoPropiedad;
-
     @ManyToOne
     @JoinColumn(name = "ID_TIPO_PROPIEDAD")
     private TipoPropiedad tipoPropiedad;
-
     @ManyToOne
     @JoinColumn(name = "ID_ESTADO")
     private Estado estado;
-
     @Basic(optional = false)
     @Column(name = "ID_USUARIO")
     private int idUsuario;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_PROPIEDAD")
     private List<FotoPropiedad> foto;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_PROPIEDAD")
     private List<ComprobantePropiedad> comprobante;
