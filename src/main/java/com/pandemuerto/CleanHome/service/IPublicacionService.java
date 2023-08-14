@@ -11,4 +11,6 @@ public interface IPublicacionService {
     MessageResponseBean addPublicacion(Publicacion publicacion);
     MessageResponseBean updatePublicacion(Publicacion publicacion);
     MessageResponseBean deletePublicacion(int id);
+
+    List<Publicacion> postPostulaciones();
 }

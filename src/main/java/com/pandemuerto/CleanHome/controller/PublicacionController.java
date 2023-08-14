@@ -1,6 +1,7 @@
 package com.pandemuerto.CleanHome.controller;
 
 import com.pandemuerto.CleanHome.model.bean.response.MessageResponseBean;
+import com.pandemuerto.CleanHome.model.entity.Propiedad;
 import com.pandemuerto.CleanHome.model.entity.Publicacion;
 import com.pandemuerto.CleanHome.service.IPublicacionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,11 @@ public class PublicacionController {
         MessageResponseBean response = publicacionService.updatePublicacion(publicacion);
         return ResponseEntity.ok(response);
     }
-
+    @PostMapping ("/postPostulaciones")
+    public ResponseEntity<?> postPostulaciones() {
+        List<Publicacion> list = publicacionService.postPostulaciones();
+        return ResponseEntity.ok(list);
+    }
     @PostMapping("/deletePublicacion")
     public ResponseEntity<?> deletePublicacion(@RequestBody Publicacion publicacion){
         MessageResponseBean response = publicacionService.deletePublicacion(publicacion.getId());

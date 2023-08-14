@@ -44,11 +44,18 @@ public class PublicacionServiceImpl implements IPublicacionService {
         return response;
     }
 
+
+
     @Override
     public MessageResponseBean deletePublicacion(int id) {
         MessageResponseBean response = new MessageResponseBean();
         publicacionRepository.deleteById(id);
         response.setMessage("Eliminacion correcta");
         return response;
+    }
+
+    @Override
+    public List<Publicacion> postPostulaciones() {
+        return null;
     }
 }

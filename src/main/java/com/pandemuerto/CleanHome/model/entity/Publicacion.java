@@ -30,4 +30,5 @@ public class Publicacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_USUARIO")
     private int idUsuario;
+
 }
