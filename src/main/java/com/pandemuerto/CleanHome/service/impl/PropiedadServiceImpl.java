@@ -46,6 +46,8 @@ public class PropiedadServiceImpl implements IPropiedadService {
     @Override
     public MessageResponseBean deletePropiedad(int id) {
         MessageResponseBean response = new MessageResponseBean();
+        fotoPropiedadRepository.deleteAllByIdPropiedad(id);
+        comprobantePropiedadRepository.deleteAllByIdPropiedad(id);
         propiedadRepository.deleteById(id);
         response.setMessage("Eliminacion correcta");
         return response;

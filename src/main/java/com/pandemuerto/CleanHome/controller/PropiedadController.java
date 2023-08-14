@@ -50,6 +50,12 @@ public class PropiedadController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/deletePropiedad")
+    public ResponseEntity<?> deletePropiedad(@RequestBody Propiedad propiedad){
+        MessageResponseBean response = propiedadService.deletePropiedad(propiedad.getId());
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/addFotos")
     public ResponseEntity<?> addFotos(
             @RequestParam("fotos") MultipartFile[] fotos,
