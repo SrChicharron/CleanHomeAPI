@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IComprobantePropiedadRepository extends JpaRepository<ComprobantePropiedad, Integer> {
+
+    void deleteAllByIdPropiedad(Integer idPropiedad);
 }

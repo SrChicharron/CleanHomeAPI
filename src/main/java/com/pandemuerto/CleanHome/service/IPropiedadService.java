@@ -20,6 +20,8 @@ public interface IPropiedadService {
 
     List<Propiedad> findPropiedadesByIdUsuario(int idUsuario);
 
-    MessageResponseBean addPictures(List<FotoPropiedad> fotos, List<ComprobantePropiedad> comprobantes);
+    MessageResponseBean addFotos(List<FotoPropiedad> fotos, int idPropiedad);
+
+    MessageResponseBean addComprobantes(List<ComprobantePropiedad> comprobantes, int idPropiedad);
 
 }
