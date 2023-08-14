@@ -24,7 +24,7 @@ public class FileTransferService implements IFileTransferService {
     private String REMOTE_PATH;
 
     @Override
-    public void uploadImage(Map<String, MultipartFile> fotos, Map<String,MultipartFile> comprobantes) throws JSchException, RuntimeException {
+    public void uploadImage(Map<String, MultipartFile> fotos) throws JSchException, RuntimeException {
         JSch jsch = new JSch();
         Session session = null;
         ChannelSftp channelSftp = null;
@@ -45,14 +45,6 @@ public class FileTransferService implements IFileTransferService {
                     throw new RuntimeException(e);
                 }
             });
-            comprobantes.forEach((s, multipartFile) -> {
-                try {
-                    finalChannelSftp.put(multipartFile.getInputStream(),REMOTE_PATH+s);
-                } catch (SftpException | IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
 
         } finally {
             if (channelSftp != null) {

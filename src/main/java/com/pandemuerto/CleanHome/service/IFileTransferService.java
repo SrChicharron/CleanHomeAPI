@@ -8,5 +8,5 @@ import java.io.InputStream;
 import java.util.Map;
 
 public interface IFileTransferService {
-    void uploadImage(Map<String, MultipartFile> fotos, Map<String,MultipartFile> comprobantes) throws JSchException, RuntimeException;
+    void uploadImage(Map<String, MultipartFile> fotos) throws JSchException, RuntimeException;
 }
