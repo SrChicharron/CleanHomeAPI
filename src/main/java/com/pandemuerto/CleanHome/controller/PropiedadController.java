@@ -106,4 +106,19 @@ public class PropiedadController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/editarEstadoPropiedad/{id}")
+    public ResponseEntity<?> editarEstatusPropiedad(@PathVariable int id,@RequestBody Propiedad propiedadRequest) {
+        Propiedad propiedad = propiedadService.findPropiedadById(id);
+
+        if (propiedad!=null){
+            propiedad.setEstatus(propiedadRequest.getEstatus());
+
+            propiedadService.updatePropiedad(propiedad);
+            return ResponseEntity.ok(new MessageResponseBean("El estatus de la propiedad fue editado con éxito."));
+        } else{
+            return ResponseEntity.badRequest().body(new MessageResponseBean("La propiedad no existe."));
+        }
+
+    }
+
 }

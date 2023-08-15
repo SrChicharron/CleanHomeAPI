@@ -39,4 +39,7 @@ public class Usuario implements Serializable {
     @NotEmpty
     @Basic(optional = false)
     private String username;
+    @Column(name = "DESCRIPCION")
+    @Basic(optional = true)
+    private String descripcion;
 }
