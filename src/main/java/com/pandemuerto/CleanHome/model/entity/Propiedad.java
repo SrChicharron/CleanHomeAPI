@@ -20,9 +20,6 @@ public class Propiedad implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private int id;
-    //@Basic(optional = false)
-    //@Column(name = "FOTO")
-    //private String foto;
     @Basic(optional = false)
     @Column(name = "TITULO")
     private String titulo;
