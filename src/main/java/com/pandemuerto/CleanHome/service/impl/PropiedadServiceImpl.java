@@ -46,6 +46,8 @@ public class PropiedadServiceImpl implements IPropiedadService {
     @Override
     public MessageResponseBean deletePropiedad(int id) {
         MessageResponseBean response = new MessageResponseBean();
+        fotoPropiedadRepository.deleteAllByIdPropiedad(id);
+        comprobantePropiedadRepository.deleteAllByIdPropiedad(id);
         propiedadRepository.deleteById(id);
         response.setMessage("Eliminacion correcta");
         return response;
@@ -66,11 +68,20 @@ public class PropiedadServiceImpl implements IPropiedadService {
     }
 
     @Override
-    public MessageResponseBean addPictures(List<FotoPropiedad> fotos, List<ComprobantePropiedad> comprobantes) {
+    public MessageResponseBean addFotos(List<FotoPropiedad> fotos, int idPropiedad) {
         MessageResponseBean response = new MessageResponseBean();
+        fotoPropiedadRepository.deleteAllByIdPropiedad(idPropiedad);
         fotoPropiedadRepository.saveAll(fotos);
+        response.setMessage("Guardado de fotos exitoso");
+        return response;
+    }
+
+    @Override
+    public MessageResponseBean addComprobantes(List<ComprobantePropiedad> comprobantes, int idPropiedad) {
+        MessageResponseBean response = new MessageResponseBean();
+        comprobantePropiedadRepository.deleteAllByIdPropiedad(idPropiedad);
         comprobantePropiedadRepository.saveAll(comprobantes);
-        response.setMessage("Guardado de imagenes exitoso");
+        response.setMessage("Guardado de comprobantes exitoso");
         return response;
     }
 

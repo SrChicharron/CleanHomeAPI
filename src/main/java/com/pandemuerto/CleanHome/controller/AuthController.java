@@ -122,4 +122,30 @@ public class AuthController {
         usuarioRepository.save(usuario);
         return ResponseEntity.ok(new MessageResponseBean("Registro Exitoso!"));
     }
+
+    @GetMapping("/getUsuario/{username}")
+    public ResponseEntity<?> getInfoUsuario(@PathVariable String username){
+        Usuario usuario = usuarioRepository.findByUsername(username);
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/editarInfoUser/{username}")
+    public ResponseEntity<?> updateInfoUser(@PathVariable String username, @RequestBody Usuario usuRequest){
+        Usuario usuario = usuarioRepository.findByUsername(username);
+
+        if (usuario != null) {
+            usuario.setName(usuRequest.getName());
+            usuario.setLastname(usuRequest.getLastname());
+            usuario.setCellphone(usuRequest.getCellphone());
+            usuario.setDescripcion(usuRequest.getDescripcion());
+            usuarioRepository.save(usuario);
+            return ResponseEntity.ok(new MessageResponseBean("La informacion del usuario se ha actualizado con exito"));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

@@ -6,16 +6,16 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "servicio")
+@Table(name = "SERVICIO")
 public class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "ID")
     private int id;
 
-    @Column(name = "nombre")
+    @Column(name = "NOMBRE")
     private String nombre;
 
-    @Column(name = "descripcion")
+    @Column(name = "DESCRIPCION")
     private String descripcion;
 }

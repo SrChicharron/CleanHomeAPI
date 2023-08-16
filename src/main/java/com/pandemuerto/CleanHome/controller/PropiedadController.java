@@ -36,26 +36,32 @@ public class PropiedadController {
     private Utils utils= new Utils();
 
     @GetMapping("/getPropiedades")
-    public ResponseEntity<?> getAllClientes() {
+    public ResponseEntity<?> getAllClientes(@RequestParam int idCliente) {
         List<Propiedad> list = propiedadService.getPropiedades();
         return ResponseEntity.ok(list);
     }
 
     @PostMapping("/addPropiedad")
     public ResponseEntity<?> addPropiedad(@RequestBody Propiedad propiedad){
+        Propiedad origin=propiedadService.findPropiedadById(propiedad.getId());
+        propiedad.setFoto(origin.getFoto());
+        propiedad.setComprobante(origin.getComprobante());
         Propiedad response = propiedadService.addPropiedad(propiedad);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/addPictures")
-    public ResponseEntity<?> addPictures(
+    @PostMapping("/deletePropiedad")
+    public ResponseEntity<?> deletePropiedad(@RequestBody Propiedad propiedad){
+        MessageResponseBean response = propiedadService.deletePropiedad(propiedad.getId());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/addFotos")
+    public ResponseEntity<?> addFotos(
             @RequestParam("fotos") MultipartFile[] fotos,
-            @RequestParam("comprobantes") MultipartFile[] comprobantes,
             @RequestParam("idPropiedad") int idpropiedad){
-        List<ComprobantePropiedad> comprobantePropiedads=new ArrayList<>();
         List<FotoPropiedad> fotoPropiedads = new ArrayList<>();
         Map<String,MultipartFile> mapFotos = new HashMap<>();
-        Map<String,MultipartFile> mapComps = new HashMap<>();
         for (MultipartFile foto : fotos) {
             String name =utils.getUUIDName(foto.getOriginalFilename());
             mapFotos.put(name,foto);
@@ -64,6 +70,23 @@ public class PropiedadController {
             fotoUpd.setIdPropiedad(idpropiedad);
             fotoPropiedads.add(fotoUpd);
         }
+        try {
+            fileTransferService.uploadImage(mapFotos);
+        } catch (JSchException e) {
+            e.printStackTrace();
+            MessageResponseBean responseBean = new MessageResponseBean("Error al  cargar las imagenes");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBean);
+        }
+        MessageResponseBean response = propiedadService.addFotos(fotoPropiedads,idpropiedad);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/addComprobantes")
+    public ResponseEntity<?> addComprobantes(
+            @RequestParam("comprobantes") MultipartFile[] comprobantes,
+            @RequestParam("idPropiedad") int idpropiedad){
+        List<ComprobantePropiedad> comprobantePropiedads=new ArrayList<>();
+        Map<String,MultipartFile> mapComps = new HashMap<>();
         for (MultipartFile comprobante : comprobantes) {
             String name =utils.getUUIDName(comprobante.getOriginalFilename());
             mapComps.put(name,comprobante);
@@ -73,14 +96,29 @@ public class PropiedadController {
             comprobantePropiedads.add(comprobanteUpd);
         }
         try {
-            fileTransferService.uploadImage(mapFotos,mapComps);
+            fileTransferService.uploadImage(mapComps);
         } catch (JSchException e) {
             e.printStackTrace();
             MessageResponseBean responseBean = new MessageResponseBean("Error al  cargar las imagenes");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBean);
         }
-        MessageResponseBean response = propiedadService.addPictures(fotoPropiedads, comprobantePropiedads);
+        MessageResponseBean response = propiedadService.addComprobantes(comprobantePropiedads,idpropiedad);
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/editarEstadoPropiedad/{id}")
+    public ResponseEntity<?> editarEstatusPropiedad(@PathVariable int id,@RequestBody Propiedad propiedadRequest) {
+        Propiedad propiedad = propiedadService.findPropiedadById(id);
+
+        if (propiedad!=null){
+            propiedad.setEstatus(propiedadRequest.getEstatus());
+
+            propiedadService.updatePropiedad(propiedad);
+            return ResponseEntity.ok(new MessageResponseBean("El estatus de la propiedad fue editado con éxito."));
+        } else{
+            return ResponseEntity.badRequest().body(new MessageResponseBean("La propiedad no existe."));
+        }
+
     }
 
 }
