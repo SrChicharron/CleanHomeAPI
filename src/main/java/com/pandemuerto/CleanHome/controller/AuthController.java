@@ -1,20 +1,21 @@
 package com.pandemuerto.CleanHome.controller;
 
+import com.jcraft.jsch.JSchException;
 import com.pandemuerto.CleanHome.jwt.JwtUtils;
 import com.pandemuerto.CleanHome.model.bean.request.ClientSignUpRequestBean;
 import com.pandemuerto.CleanHome.model.bean.request.LoginRequestBean;
 import com.pandemuerto.CleanHome.model.bean.request.SignUpRequestBean;
 import com.pandemuerto.CleanHome.model.bean.response.JwtResponseBean;
 import com.pandemuerto.CleanHome.model.bean.response.MessageResponseBean;
-import com.pandemuerto.CleanHome.model.entity.Propiedad;
-import com.pandemuerto.CleanHome.model.entity.Servicio;
-import com.pandemuerto.CleanHome.model.entity.Usuario;
-import com.pandemuerto.CleanHome.model.entity.User;
+import com.pandemuerto.CleanHome.model.entity.*;
 import com.pandemuerto.CleanHome.repository.IUsuarioRepository;
 import com.pandemuerto.CleanHome.repository.IUserRepository;
+import com.pandemuerto.CleanHome.service.IFileTransferService;
 import com.pandemuerto.CleanHome.service.impl.UserDetailsImpl;
+import com.pandemuerto.CleanHome.utils.Utils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,8 +24,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 //@CrossOrigin(origins = {"http://localhost:3000","192.168.0.110:19000"}, maxAge = 3600)
 @RestController
@@ -38,6 +43,11 @@ public class AuthController {
 
     @Autowired
     IUsuarioRepository usuarioRepository;
+
+    @Autowired
+    IFileTransferService fileTransferService;
+
+    private Utils utils= new Utils();
 
     @Autowired
     PasswordEncoder encoder;
@@ -169,4 +179,27 @@ public class AuthController {
             return ResponseEntity.ok(new MessageResponseBean("El estatus del usuario fue editado con éxito."));
 
     }
+
+    @PostMapping("/addFoto")
+    public ResponseEntity<?> addFoto(
+            @RequestParam("foto") MultipartFile foto,
+            @RequestParam("comprobante") MultipartFile comprobante,
+            @RequestParam("idUsuario") int idUsuario){
+        Usuario usuario= usuarioRepository.findById(idUsuario).orElse(new Usuario());
+        String nombreFoto =utils.getUUIDName(foto.getOriginalFilename());
+        String nombreComprobante =utils.getUUIDName(foto.getOriginalFilename());
+        try {
+            fileTransferService.uploadImage(foto,nombreFoto);
+            fileTransferService.uploadImage(comprobante,nombreComprobante);
+        } catch (JSchException e) {
+            e.printStackTrace();
+            MessageResponseBean responseBean = new MessageResponseBean("Error al  cargar las imagenes");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBean);
+        }
+        usuario.setFoto(nombreFoto);
+        usuario.setComprobante(nombreComprobante);
+        Usuario updated=usuarioRepository.save(usuario);
+        return ResponseEntity.ok(updated);
+    }
+
 }

@@ -55,4 +55,35 @@ public class FileTransferService implements IFileTransferService {
             }
         }
     }
+
+    @Override
+    public void uploadImage(MultipartFile foto, String nombre) throws JSchException, RuntimeException {
+        JSch jsch = new JSch();
+        Session session = null;
+        ChannelSftp channelSftp = null;
+
+        try {
+            session = jsch.getSession(SFTP_USER, SFTP_HOST, SFTP_PORT);
+            session.setPassword(SFTP_PASSWORD);
+            session.setConfig("StrictHostKeyChecking", "no");
+            session.connect();
+
+            channelSftp = (ChannelSftp) session.openChannel("sftp");
+            channelSftp.connect();
+            ChannelSftp finalChannelSftp = channelSftp;
+                try {
+                    finalChannelSftp.put(foto.getInputStream(),REMOTE_PATH+nombre);
+                } catch (SftpException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+        } finally {
+            if (channelSftp != null) {
+                channelSftp.disconnect();
+            }
+            if (session != null) {
+                session.disconnect();
+            }
+        }
+    }
 }

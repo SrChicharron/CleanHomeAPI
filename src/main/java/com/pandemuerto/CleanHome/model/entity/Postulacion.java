@@ -33,4 +33,7 @@ public class Postulacion implements Serializable {
     @Basic(optional = true)
     @Column(name = "ESTATUS")
     private String estatus;
+
+    @Transient
+    private Propiedad propiedad;
 }
