@@ -12,7 +12,6 @@ import java.io.Serializable;
 public class Postulacion implements Serializable {
     @Serial
     private static final long serialVersionUID = -2396336427200222457L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
