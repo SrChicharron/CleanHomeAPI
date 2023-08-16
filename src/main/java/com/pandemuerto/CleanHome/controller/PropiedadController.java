@@ -1,23 +1,19 @@
 package com.pandemuerto.CleanHome.controller;
 
 import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.SftpException;
 import com.pandemuerto.CleanHome.model.bean.response.MessageResponseBean;
 import com.pandemuerto.CleanHome.model.entity.ComprobantePropiedad;
 import com.pandemuerto.CleanHome.model.entity.FotoPropiedad;
 import com.pandemuerto.CleanHome.model.entity.Propiedad;
-import com.pandemuerto.CleanHome.model.entity.Publicacion;
 import com.pandemuerto.CleanHome.service.IFileTransferService;
 import com.pandemuerto.CleanHome.service.IPropiedadService;
 import com.pandemuerto.CleanHome.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
