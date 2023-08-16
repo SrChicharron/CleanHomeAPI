@@ -183,36 +183,23 @@ public class AuthController {
     @PostMapping("/addFoto")
     public ResponseEntity<?> addFoto(
             @RequestParam("foto") MultipartFile foto,
+            @RequestParam("comprobante") MultipartFile comprobante,
             @RequestParam("idUsuario") int idUsuario){
         Usuario usuario= usuarioRepository.findById(idUsuario).orElse(new Usuario());
-        String name =utils.getUUIDName(foto.getOriginalFilename());
+        String nombreFoto =utils.getUUIDName(foto.getOriginalFilename());
+        String nombreComprobante =utils.getUUIDName(foto.getOriginalFilename());
         try {
-            fileTransferService.uploadImage(foto,name);
+            fileTransferService.uploadImage(foto,nombreFoto);
+            fileTransferService.uploadImage(comprobante,nombreComprobante);
         } catch (JSchException e) {
             e.printStackTrace();
             MessageResponseBean responseBean = new MessageResponseBean("Error al  cargar las imagenes");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBean);
         }
-        usuario.setFoto(name);
+        usuario.setFoto(nombreFoto);
+        usuario.setComprobante(nombreComprobante);
         Usuario updated=usuarioRepository.save(usuario);
         return ResponseEntity.ok(updated);
     }
 
-    @PostMapping("/addComprobante")
-    public ResponseEntity<?> addComprobante(
-            @RequestParam("comprobante") MultipartFile foto,
-            @RequestParam("idUsuario") int idUsuario){
-        Usuario usuario= usuarioRepository.findById(idUsuario).orElse(new Usuario());
-        String name =utils.getUUIDName(foto.getOriginalFilename());
-        try {
-            fileTransferService.uploadImage(foto,name);
-        } catch (JSchException e) {
-            e.printStackTrace();
-            MessageResponseBean responseBean = new MessageResponseBean("Error al  cargar las imagenes");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBean);
-        }
-        usuario.setFoto(name);
-        Usuario updated=usuarioRepository.save(usuario);
-        return ResponseEntity.ok(updated);
-    }
 }
