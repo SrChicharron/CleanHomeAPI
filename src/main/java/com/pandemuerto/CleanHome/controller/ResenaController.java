@@ -3,6 +3,7 @@ package com.pandemuerto.CleanHome.controller;
 import com.pandemuerto.CleanHome.model.bean.response.MessageResponseBean;
 import com.pandemuerto.CleanHome.model.entity.Resena;
 import com.pandemuerto.CleanHome.service.IResenaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/ch/resena")
 public class ResenaController {
+    @Autowired
     private IResenaService resenaService;
     @GetMapping("/getResenasPublicacion")
     public ResponseEntity<?> getResenasPublicacion(@RequestParam int idPublicacion){
