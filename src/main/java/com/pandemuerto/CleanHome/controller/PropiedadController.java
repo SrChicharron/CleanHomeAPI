@@ -40,7 +40,11 @@ public class PropiedadController {
         List<Propiedad> list = propiedadService.getPropiedades();
         return ResponseEntity.ok(list);
     }
-
+    @GetMapping("/getallPropiedades")
+    public ResponseEntity<?> getallPropiedades() {
+        List<Propiedad> list = propiedadService.getPropiedades();
+        return ResponseEntity.ok(list);
+    }
     @PostMapping("/addPropiedad")
     public ResponseEntity<?> addPropiedad(@RequestBody Propiedad propiedad){
         Propiedad origin=propiedadService.findPropiedadById(propiedad.getId());

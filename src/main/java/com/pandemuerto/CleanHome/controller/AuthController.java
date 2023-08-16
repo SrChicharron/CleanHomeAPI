@@ -6,6 +6,8 @@ import com.pandemuerto.CleanHome.model.bean.request.LoginRequestBean;
 import com.pandemuerto.CleanHome.model.bean.request.SignUpRequestBean;
 import com.pandemuerto.CleanHome.model.bean.response.JwtResponseBean;
 import com.pandemuerto.CleanHome.model.bean.response.MessageResponseBean;
+import com.pandemuerto.CleanHome.model.entity.Propiedad;
+import com.pandemuerto.CleanHome.model.entity.Servicio;
 import com.pandemuerto.CleanHome.model.entity.Usuario;
 import com.pandemuerto.CleanHome.model.entity.User;
 import com.pandemuerto.CleanHome.repository.IUsuarioRepository;
@@ -18,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -147,5 +150,23 @@ public class AuthController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/getUsuarios")
+    public ResponseEntity<?> getNewUsers() {
+        List<User> list = userRepository.findAll();
+        return ResponseEntity.ok(list);
+    }
+
+    @PutMapping("/editarEstatusUser/{username}")
+    public ResponseEntity<?> updateStatusUser(@PathVariable String username, @RequestBody User userRequest) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+
+
+            user.setEnabled(userRequest.getEnabled());
+            userRepository.save(user);
+            return ResponseEntity.ok(new MessageResponseBean("El estatus del usuario fue editado con éxito."));
+
     }
 }

@@ -3,6 +3,7 @@ package com.pandemuerto.CleanHome.service.impl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pandemuerto.CleanHome.model.entity.Rol;
 import com.pandemuerto.CleanHome.model.entity.User;
+import com.pandemuerto.CleanHome.model.entity.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,12 +25,16 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
+    private Collection<? extends GrantedAuthority> informacion;
+
     public UserDetailsImpl(String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Collection<? extends GrantedAuthority> authorities,
+                           Collection<? extends GrantedAuthority> informacion) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.informacion = informacion;
     }
 
     public static UserDetailsImpl build(User user) {
@@ -38,11 +43,16 @@ public class UserDetailsImpl implements UserDetails {
             authorities.add(new SimpleGrantedAuthority(rol.getAuthority()));
         }
 
+        List<GrantedAuthority> informacion = new ArrayList<>();
+        for (Usuario usuario:user.getInformacion()){
+            informacion.add(new SimpleGrantedAuthority(usuario.getUsername()));
+        }
+
         return new UserDetailsImpl(
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities);
+                authorities,informacion);
     }
 
     @Override
