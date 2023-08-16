@@ -22,8 +22,8 @@ public class Publicacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @Column(name = "ESTADO_PUBLICACION")
-    private String estadoPublicacion;
+    @Column(name = "ESTATUS")
+    private String estatus;
     @Column(name = "FECHA")
     private Date fecha;
     @Basic(optional = false)
