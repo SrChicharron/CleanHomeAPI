@@ -11,6 +11,7 @@ import com.pandemuerto.CleanHome.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +32,7 @@ public class PropiedadController {
 
     private Utils utils= new Utils();
 
+    @PreAuthorize("hasRole('ROLE_CLIENTE') OR hasRole('ROLE_EMPLEADO')")
     @GetMapping("/getPropiedades")
     public ResponseEntity<?> getAllClientes(@RequestParam int idCliente) {
         List<Propiedad> list = propiedadService.getPropiedades();
@@ -41,6 +43,7 @@ public class PropiedadController {
         List<Propiedad> list = propiedadService.getPropiedades();
         return ResponseEntity.ok(list);
     }
+    @PreAuthorize("hasRole('ROLE_CLIENTE') OR hasRole('ROLE_EMPLEADO')")
     @PostMapping("/addPropiedad")
     public ResponseEntity<?> addPropiedad(@RequestBody Propiedad propiedad){
         Propiedad origin=propiedadService.findPropiedadById(propiedad.getId());
@@ -50,12 +53,14 @@ public class PropiedadController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ROLE_CLIENTE') OR hasRole('ROLE_EMPLEADO')")
     @PostMapping("/deletePropiedad")
     public ResponseEntity<?> deletePropiedad(@RequestBody Propiedad propiedad){
         MessageResponseBean response = propiedadService.deletePropiedad(propiedad.getId());
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ROLE_CLIENTE') OR hasRole('ROLE_EMPLEADO')")
     @PostMapping("/addFotos")
     public ResponseEntity<?> addFotos(
             @RequestParam("fotos") MultipartFile[] fotos,
@@ -81,6 +86,7 @@ public class PropiedadController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ROLE_CLIENTE') OR hasRole('ROLE_EMPLEADO')")
     @PostMapping("/addComprobantes")
     public ResponseEntity<?> addComprobantes(
             @RequestParam("comprobantes") MultipartFile[] comprobantes,
