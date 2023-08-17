@@ -29,12 +29,13 @@ public class Publicacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "PAGO_OFRECIDO")
     private Float pagoOfrecido;
-    @Basic(optional = false)
-    @Column(name = "ID_SERVICIO")
-    private int idTipoServicio;
-    @Column(name = "ID_USUARIO")
-    private int idUsuario;
-    @Basic(optional = false)
-    @Column(name = "ID_PROPIEDAD")
-    private int idPropiedad;
+    @ManyToOne
+    @JoinColumn(name = "ID_USUARIO")
+    private Usuario usuario;
+    @ManyToOne
+    @JoinColumn(name = "ID_PROPIEDAD")
+    private Propiedad propiedad;
+    @ManyToOne
+    @JoinColumn(name = "ID_SERVICIO")
+    private Servicio servicio;
 }

@@ -30,7 +30,7 @@ public class PostulacionServiceImpl implements IPostulacionService {
         List<Postulacion> postulacions = new ArrayList<>();
         postulacionRepository.findAllByPublicacionId(idPublicacion).forEach(postulacions::add);
         for(int i=0;i<postulacions.size();i++){
-            Propiedad prop=propiedadRepository.findById(postulacions.get(i).getPublicacion().getIdPropiedad()).orElse(new Propiedad());
+            Propiedad prop=propiedadRepository.findById(postulacions.get(i).getPublicacion().getPropiedad().getId()).orElse(new Propiedad());
             postulacions.get(i).setPropiedad(prop);
         }
         return postulacions;
@@ -40,7 +40,7 @@ public class PostulacionServiceImpl implements IPostulacionService {
         List<Postulacion> postulacions = new ArrayList<>();
         postulacionRepository.findAllByClienteId(idCliente).forEach(postulacions::add);
         for(int i=0;i<postulacions.size();i++){
-            Propiedad prop=propiedadRepository.findById(postulacions.get(i).getPublicacion().getIdPropiedad()).orElse(new Propiedad());
+            Propiedad prop=propiedadRepository.findById(postulacions.get(i).getPublicacion().getPropiedad().getId()).orElse(new Propiedad());
             postulacions.get(i).setPropiedad(prop);
         }
         return postulacions;
@@ -50,7 +50,7 @@ public class PostulacionServiceImpl implements IPostulacionService {
         List<Postulacion> postulacions = new ArrayList<>();
         postulacionRepository.findAllByEmpleadoId(idEmpleado).forEach(postulacions::add);
         for(int i=0;i<postulacions.size();i++){
-            Propiedad prop=propiedadRepository.findById(postulacions.get(i).getPublicacion().getIdPropiedad()).orElse(new Propiedad());
+            Propiedad prop=propiedadRepository.findById(postulacions.get(i).getPublicacion().getPropiedad().getId()).orElse(new Propiedad());
             postulacions.get(i).setPropiedad(prop);
         }
         return postulacions;
