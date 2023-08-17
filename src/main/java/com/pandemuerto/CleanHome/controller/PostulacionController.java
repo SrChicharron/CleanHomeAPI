@@ -53,7 +53,7 @@ public class PostulacionController {
     }
 
     @PostMapping("/editarEstatusPostulacion")
-    public ResponseEntity<?> editarEstatusPostulacion(@PathVariable int id,@RequestBody Postulacion postulacionRequest){
+    public ResponseEntity<?> editarEstatusPostulacion(@RequestParam int id,@RequestBody Postulacion postulacionRequest){
         Postulacion postulacion = postulacionService.findPostulacionById(id);
         if(postulacion!=null){
             postulacion.setEstatus(postulacionRequest.getEstatus());
