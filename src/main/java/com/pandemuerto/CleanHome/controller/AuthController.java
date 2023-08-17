@@ -17,6 +17,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -132,8 +133,8 @@ public class AuthController {
         usuario.setCellphone(signupRequest.getCellphone());
         usuario.setBirthday(signupRequest.getBirthday());
         usuario.setUsername(signupRequest.getUsername());
-        usuarioRepository.save(usuario);
-        return ResponseEntity.ok(new MessageResponseBean("Registro Exitoso!"));
+        Usuario newUsuario=usuarioRepository.save(usuario);
+        return ResponseEntity.ok(newUsuario);
     }
 
     @GetMapping("/getUsuario/{username}")
@@ -182,22 +183,18 @@ public class AuthController {
 
     @PostMapping("/addFoto")
     public ResponseEntity<?> addFoto(
-            @RequestParam("foto") MultipartFile foto,
-            @RequestParam("comprobante") MultipartFile comprobante,
+            @RequestParam("ine") MultipartFile ine,
             @RequestParam("idUsuario") int idUsuario){
         Usuario usuario= usuarioRepository.findById(idUsuario).orElse(new Usuario());
-        String nombreFoto =utils.getUUIDName(foto.getOriginalFilename());
-        String nombreComprobante =utils.getUUIDName(foto.getOriginalFilename());
+        String nombreIne =utils.getUUIDName(ine.getOriginalFilename());
         try {
-            fileTransferService.uploadImage(foto,nombreFoto);
-            fileTransferService.uploadImage(comprobante,nombreComprobante);
+            fileTransferService.uploadImage(ine,nombreIne);
         } catch (JSchException e) {
             e.printStackTrace();
             MessageResponseBean responseBean = new MessageResponseBean("Error al  cargar las imagenes");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBean);
         }
-        usuario.setFoto(nombreFoto);
-        usuario.setComprobante(nombreComprobante);
+        usuario.setComprobante(nombreIne);
         Usuario updated=usuarioRepository.save(usuario);
         return ResponseEntity.ok(updated);
     }
