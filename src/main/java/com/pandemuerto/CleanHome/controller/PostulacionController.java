@@ -51,4 +51,16 @@ public class PostulacionController {
         MessageResponseBean response = postulacionService.deletePostulacion(idPostulacion);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/editarEstatusPostulacion")
+    public ResponseEntity<?> editarEstatusPostulacion(@PathVariable int id,@RequestBody Postulacion postulacionRequest){
+        Postulacion postulacion = postulacionService.findPostulacionById(id);
+        if(postulacion!=null){
+            postulacion.setEstatus(postulacionRequest.getEstatus());
+            postulacionService.updatePostulacion(postulacion);
+            return ResponseEntity.ok(new MessageResponseBean("El estatus de la postulacion fue editado con éxito."));
+        }else{
+            return ResponseEntity.badRequest().body(new MessageResponseBean("La postulacion no existe."));
+        }
+    }
 }

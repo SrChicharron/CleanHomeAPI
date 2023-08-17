@@ -12,4 +12,5 @@ public interface IPostulacionService {
     List<Postulacion> getPostulacionesByEmpleado(int idEmpleado);
     Postulacion updatePostulacion(Postulacion postulacion);
     MessageResponseBean deletePostulacion(int idPostulacion);
+    Postulacion findPostulacionById(int id);
 }

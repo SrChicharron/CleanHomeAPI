@@ -68,4 +68,10 @@ public class PostulacionServiceImpl implements IPostulacionService {
         responseBean.setMessage("Eliminacion correcta");
         return responseBean;
     }
+
+    @Override
+    public Postulacion findPostulacionById(int id){
+        Postulacion postulacion=postulacionRepository.findById(id).orElse(null);
+        return postulacion;
+    }
 }
